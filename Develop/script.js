@@ -3,17 +3,19 @@ var generateBtn = document.querySelector("#generate");
 
 // Password variable defined as global
 var password = "";
-
+var prevpass = "";
 
 function generatePassword() {
   
   // Declaration of the possible characters string (the quotation sign requires the backslash to make it an escape character)
-  var upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; //0 - 25
-  var lowerChars = "abcdefghijklmnopqrstuvwxyz"; //0 - 25
-  var numbers = "0123456789"; //0 - 9
-  var specialChars = " !\"#$%&'(\\)*+,-./:;<=>?@[]^_`{|}~"; //0 - 32
+  var upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  var lowerChars = "abcdefghijklmnopqrstuvwxyz";
+  var charsLenght = 26;
+  var numbersChars = "0123456789";
+  var numbersLenght = 10;
+  var specialChars = " !\"#$%&'(\\)*+,-./:;<=>?@[]^_`{|}~";
+  var specialCharsLenght = 33;
   
-  var prevpass = "";
 
   // Asks about the password length
   var pwdLenghtstr = window.prompt("Enter the password lenght (number between 8 and 128)")
@@ -32,88 +34,89 @@ function generatePassword() {
       //0001
       if ((upper===false)&&(lower===false)&&(numeric===false)&&(spechar===true)){
         var availableChars = specialChars;
+        var avClenght = specialCharsLenght;
+        password = passwordGenAuto(pwdLenght, availableChars, avClenght);
 
-        for (var i = 0; i<pwdLenght; i++){
-          
-          var numgen = getRndInteger(0,32);
-          password = prevpass.concat(availableChars.charAt(numgen));
-          
-          prevpass = password;
-        }
       }
       //0010
       else if ((upper===false)&&(lower===false)&&(numeric===true)&&(spechar===false)){
-        var availableChars = numbers;
-
-        for (var i = 0; i<pwdLenght; i++){
-          
-          var numgen = getRndInteger(0,9);
-          password = prevpass.concat(availableChars.charAt(numgen));
-          
-          prevpass = password;
-        }
+        var availableChars = numbersChars;
+        var avClenght = numbersLenght;
+        password = passwordGenAuto(pwdLenght, availableChars, avClenght);
       }
       //0011
       else if ((upper===false)&&(lower===false)&&(numeric===true)&&(spechar===true)){
-        var availableChars = numbers.concat(specialChars);
-
-        for (var i = 0; i<pwdLenght; i++){
-          
-          var numgen = getRndInteger(0,42);
-          password = prevpass.concat(availableChars.charAt(numgen));
-          
-          prevpass = password;
-        }
+        var availableChars = numbersChars.concat(specialChars);
+        avClenght = numbersLenght + specialCharsLenght;
+        password = passwordGenAuto(pwdLenght, availableChars, avClenght);
       }
 
       //0100
       else if ((upper===false)&&(lower===true)&&(numeric===false)&&(spechar===false)){
         var availableChars = lowerChars;
-
-        for (var i = 0; i<pwdLenght; i++){
-          
-          var numgen = getRndInteger(0,25);
-          password = prevpass.concat(availableChars.charAt(numgen));
-        
-          prevpass = password;
-        }
+        avClenght = charsLenght;
+        password = passwordGenAuto(pwdLenght, availableChars, avClenght);
       }
 
       //0101
       else if ((upper===false)&&(lower===true)&&(numeric===false)&&(spechar===true)){
         var availableChars = lowerChars.concat(specialChars);
-
-        for (var i = 0; i<pwdLenght; i++){
-          
-          var numgen = getRndInteger(0,58);
-          password = prevpass.concat(availableChars.charAt(numgen));
-        
-          prevpass = password;
-        }
+        avClenght = charsLenght + specialCharsLenght;
+        password = passwordGenAuto(pwdLenght, availableChars, avClenght);
       }
 
      //0110
      else if ((upper===false)&&(lower===true)&&(numeric===true)&&(spechar===false)){
-      var availableChars = lowerChars.concat(numeric);
-
-      for (var i = 0; i<pwdLenght; i++){
-        
-        var numgen = getRndInteger(0,35);
-        password = prevpass.concat(availableChars.charAt(numgen));
-      
-        prevpass = password;
-      }
+      var availableChars = lowerChars.concat(numbersChars);
+      avClenght = charsLenght + numbersLenght;
+      password = passwordGenAuto(pwdLenght, availableChars, avClenght);
     } 
 
+    //0111
+    else if ((upper===false)&&(lower===true)&&(numeric===true)&&(spechar===true)){
+      var availableChars = lowerChars.concat(numbersChars,specialChars);
+      avClenght = charsLenght + numbersLenght + specialCharsLenght;
+      password = passwordGenAuto(pwdLenght, availableChars, avClenght);
+    } 
 
+    //1000
+    else if ((upper===true)&&(lower===false)&&(numeric===false)&&(spechar===false)){
+      var availableChars = upperChars;
+      avClenght = charsLenght;
+      password = passwordGenAuto(pwdLenght, availableChars, avClenght);
+    }
 
+    //1001
+    else if ((upper===true)&&(lower===false)&&(numeric===false)&&(spechar===true)){
+      var availableChars = upperChars.concat(specialChars);
+      avClenght = charsLenght + specialCharsLenght;
+      password = passwordGenAuto(pwdLenght, availableChars, avClenght);
+    }
 
+    //1010
+    else if ((upper===true)&&(lower===false)&&(numeric===true)&&(spechar===false)){
+      var availableChars = upperChars.concat(numbersChars);
+      avClenght = charsLenght + numbersLenght;
+      password = passwordGenAuto(pwdLenght, availableChars, avClenght);
+    }
 
+    //1011
+    else if ((upper===true)&&(lower===false)&&(numeric===true)&&(spechar===true)){
+      var availableChars = upperChars.concat(numbersChars,specialChars);
+      avClenght = charsLenght + numbersLenght + specialCharsLenght;
+      password = passwordGenAuto(pwdLenght, availableChars, avClenght);
+    }
 
-
-      else{
-        window.alert("You didn't select a valid option 1");
-      }
+    //1100
+    else if ((upper===true)&&(lower===true)&&(numeric===false)&&(spechar===false)){
+      var availableChars = upperChars.concat(lowerChars);
+      avClenght = charsLenght * 2;
+      password = passwordGenAuto(pwdLenght, availableChars, avClenght);
+    }
+    
+    else{
+      window.alert("You didn't select a valid option 1");
+    }
 
     }
 
@@ -138,6 +141,18 @@ function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min) ) + min;
 }
 
+
+function passwordGenAuto(pwdLenght, availableChars, avClenght){
+
+  for (var i = 0; i<pwdLenght; i++){
+          
+    var numgen = getRndInteger(0,(avClenght-1));
+    password = prevpass.concat(availableChars.charAt(numgen));
+    
+    prevpass = password;
+  }
+  return password;
+}
 
 
 // Add event listener to generate button
