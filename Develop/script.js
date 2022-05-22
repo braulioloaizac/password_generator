@@ -8,11 +8,11 @@ var password = "";
 function generatePassword() {
   
   // Declaration of the possible characters string (the quotation sign requires the backslash to make it an escape character)
-  var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 !\"#$%&'(\\)*+,-./:;<=>?@[]^_`{|}~";
-  // console.log(chars);
+  var upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; //0 - 25
+  var lowerChars = "abcdefghijklmnopqrstuvwxyz"; //0 - 25
+  var numbers = "0123456789"; //0 - 9
+  var specialChars = " !\"#$%&'(\\)*+,-./:;<=>?@[]^_`{|}~"; //0 - 32
   
-  //The alphabet has 26 letters * 2 plus 10 numbers and 33 special characters
-  var charsLenght = 93;
   var prevpass = "";
 
   // Asks about the password length
@@ -29,58 +29,87 @@ function generatePassword() {
     var lower = window.confirm("Do you want lowercase letters on your password?");
     var numeric = window.confirm("Do you want numbers on your password?");
     var spechar = window.confirm("Do you want special characters on your password");
-
+      //0001
       if ((upper===false)&&(lower===false)&&(numeric===false)&&(spechar===true)){
+        var availableChars = specialChars;
+
         for (var i = 0; i<pwdLenght; i++){
           
-          var numgen = getRndInteger(61,charsLenght);
+          var numgen = getRndInteger(0,32);
+          password = prevpass.concat(availableChars.charAt(numgen));
           
-          password = prevpass.concat(chars.charAt(numgen));
+          prevpass = password;
+        }
+      }
+      //0010
+      else if ((upper===false)&&(lower===false)&&(numeric===true)&&(spechar===false)){
+        var availableChars = numbers;
+
+        for (var i = 0; i<pwdLenght; i++){
+          
+          var numgen = getRndInteger(0,9);
+          password = prevpass.concat(availableChars.charAt(numgen));
+          
+          prevpass = password;
+        }
+      }
+      //0011
+      else if ((upper===false)&&(lower===false)&&(numeric===true)&&(spechar===true)){
+        var availableChars = numbers.concat(specialChars);
+
+        for (var i = 0; i<pwdLenght; i++){
+          
+          var numgen = getRndInteger(0,42);
+          password = prevpass.concat(availableChars.charAt(numgen));
           
           prevpass = password;
         }
       }
 
-      // else if (option === [false,false,true,false]){
-        
-      // }
+      //0100
+      else if ((upper===false)&&(lower===true)&&(numeric===false)&&(spechar===false)){
+        var availableChars = lowerChars;
 
-      // else if (option === [false,false,true,true]){
+        for (var i = 0; i<pwdLenght; i++){
+          
+          var numgen = getRndInteger(0,25);
+          password = prevpass.concat(availableChars.charAt(numgen));
         
-      // }
-      // else if (option === [false,true,false,false]){
+          prevpass = password;
+        }
+      }
+
+      //0101
+      else if ((upper===false)&&(lower===true)&&(numeric===false)&&(spechar===true)){
+        var availableChars = lowerChars.concat(specialChars);
+
+        for (var i = 0; i<pwdLenght; i++){
+          
+          var numgen = getRndInteger(0,58);
+          password = prevpass.concat(availableChars.charAt(numgen));
         
-      // }
-      // else if (option === [false,true,false,true]){
+          prevpass = password;
+        }
+      }
+
+     //0110
+     else if ((upper===false)&&(lower===true)&&(numeric===true)&&(spechar===false)){
+      var availableChars = lowerChars.concat(numeric);
+
+      for (var i = 0; i<pwdLenght; i++){
         
-      // }
-      // else if (option === [false,false,false,false]){
-        
-      // }
-      // else if (option === [false,false,false,false]){
-        
-      // }
-      // else if (option === [false,false,false,false]){
-        
-      // }
-      // else if (option === [false,false,false,false]){
-        
-      // }
-      // else if (option === [false,false,false,false]){
-        
-      // }
-      // else if (option === [false,false,false,false]){
-        
-      // }
-      // else if (option === [false,false,false,false]){
-        
-      // }
-      // else if (option === [false,false,false,false]){
-        
-      // }
-      // else if (option === [false,false,false,false]){
-        
-      // }
+        var numgen = getRndInteger(0,35);
+        password = prevpass.concat(availableChars.charAt(numgen));
+      
+        prevpass = password;
+      }
+    } 
+
+
+
+
+
+
 
       else{
         window.alert("You didn't select a valid option 1");
