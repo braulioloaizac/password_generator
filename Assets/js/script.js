@@ -10,10 +10,12 @@ function generatePassword() {
   // Declaration of the possible characters string (the quotation sign requires the backslash to make it an escape character)
   var upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   var lowerChars = "abcdefghijklmnopqrstuvwxyz";
-  var charsLenght = 26;
   var numbersChars = "0123456789";
-  var numbersLenght = 10;
   var specialChars = " !\"#$%&'(\\)*+,-./:;<=>?@[]^_`{|}~";
+  
+  //Length of the strings
+  var charsLenght = 26;
+  var numbersLenght = 10;
   var specialCharsLenght = 33;
   
 
@@ -161,14 +163,15 @@ function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min) ) + min;
 }
 
-
+//Generates the password using the available chars depending on the case
 function passwordGenAuto(pwdLength, availableChars, avClenght){
 
   for (var i = 0; i<pwdLength; i++){
-          
+    //Executes the random number generator function       
     var numgen = getRndInteger(0,(avClenght-1));
+    //Adds a new character to the previous set of characters
     password = prevpass.concat(availableChars.charAt(numgen));
-    
+    //Updates the prevpass variable with the new string
     prevpass = password;
   }
   return password;
