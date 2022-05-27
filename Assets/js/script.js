@@ -1,24 +1,28 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 
-// Password variable defined as global
-var password = "";
-var prevpass = "";
+
 
 function generatePassword() {
   
+  // Password variable defined as global
+var password = "";
+var prevpass = "";
+
   // Declaration of the possible characters string (the quotation sign requires the backslash to make it an escape character)
   var upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   var lowerChars = "abcdefghijklmnopqrstuvwxyz";
-  var charsLenght = 26;
+  var charsLength = 26;
   var numbersChars = "0123456789";
-  var numbersLenght = 10;
+  var numbersLength = 10;
   var specialChars = " !\"#$%&'(\\)*+,-./:;<=>?@[]^_`{|}~";
-  var specialCharsLenght = 33;
+  var specialCharsLength = 33;
   
+  var availableChars = "";
+  var avCLength = 0;
 
   // Asks about the password length
-  var pwdLengthstr = window.prompt("Enter the password lenght (number between 8 and 128)")
+  var pwdLengthstr = window.prompt("Enter the password Length (number between 8 and 128)")
   
   // String to integer conversion
   var pwdLength = parseInt(pwdLengthstr);
@@ -32,112 +36,40 @@ function generatePassword() {
     var numeric = window.confirm("Do you want numbers on your password?");
     var spechar = window.confirm("Do you want special characters on your password");
 
-      //0001
-      if ((upper===false)&&(lower===false)&&(numeric===false)&&(spechar===true)){
-        var availableChars = specialChars;
-        var avClenght = specialCharsLenght;
-        password = passwordGenAuto(pwdLength, availableChars, avClenght);
+      //See the options that have been selected and adds it to the availableChars string, the same for the length
+      if (upper===true){
+        availableChars = availableChars.concat(upperChars);
+        avCLength = avCLength + charsLength;
       }
-      //0010
-      else if ((upper===false)&&(lower===false)&&(numeric===true)&&(spechar===false)){
-        var availableChars = numbersChars;
-        var avClenght = numbersLenght;
-        password = passwordGenAuto(pwdLength, availableChars, avClenght);
+      
+      if(lower===true){
+        availableChars = availableChars.concat(lowerChars);
+        avCLength = avCLength + charsLength;
       }
-      //0011
-      else if ((upper===false)&&(lower===false)&&(numeric===true)&&(spechar===true)){
-        var availableChars = numbersChars.concat(specialChars);
-        avClenght = numbersLenght + specialCharsLenght;
-        password = passwordGenAuto(pwdLength, availableChars, avClenght);
+      
+      if(numeric===true){
+        availableChars = availableChars.concat(numbersChars);
+        avCLength = avCLength + numbersLength;
       }
-
-      //0100
-      else if ((upper===false)&&(lower===true)&&(numeric===false)&&(spechar===false)){
-        var availableChars = lowerChars;
-        avClenght = charsLenght;
-        password = passwordGenAuto(pwdLength, availableChars, avClenght);
+      
+      if(spechar===true){
+        availableChars = availableChars.concat(specialChars);
+        avCLength = avCLength + specialCharsLength;  
       }
 
-      //0101
-      else if ((upper===false)&&(lower===true)&&(numeric===false)&&(spechar===true)){
-        var availableChars = lowerChars.concat(specialChars);
-        avClenght = charsLenght + specialCharsLenght;
-        password = passwordGenAuto(pwdLength, availableChars, avClenght);
-      }
-
-     //0110
-     else if ((upper===false)&&(lower===true)&&(numeric===true)&&(spechar===false)){
-      var availableChars = lowerChars.concat(numbersChars);
-      avClenght = charsLenght + numbersLenght;
-      password = passwordGenAuto(pwdLength, availableChars, avClenght);
-    } 
-
-    //0111
-    else if ((upper===false)&&(lower===true)&&(numeric===true)&&(spechar===true)){
-      var availableChars = lowerChars.concat(numbersChars,specialChars);
-      avClenght = charsLenght + numbersLenght + specialCharsLenght;
-      password = passwordGenAuto(pwdLength, availableChars, avClenght);
-    } 
-
-    //1000
-    else if ((upper===true)&&(lower===false)&&(numeric===false)&&(spechar===false)){
-      var availableChars = upperChars;
-      avClenght = charsLenght;
-      password = passwordGenAuto(pwdLength, availableChars, avClenght);
-    }
-
-    //1001
-    else if ((upper===true)&&(lower===false)&&(numeric===false)&&(spechar===true)){
-      var availableChars = upperChars.concat(specialChars);
-      avClenght = charsLenght + specialCharsLenght;
-      password = passwordGenAuto(pwdLength, availableChars, avClenght);
-    }
-
-    //1010
-    else if ((upper===true)&&(lower===false)&&(numeric===true)&&(spechar===false)){
-      var availableChars = upperChars.concat(numbersChars);
-      avClenght = charsLenght + numbersLenght;
-      password = passwordGenAuto(pwdLength, availableChars, avClenght);
-    }
-
-    //1011
-    else if ((upper===true)&&(lower===false)&&(numeric===true)&&(spechar===true)){
-      var availableChars = upperChars.concat(numbersChars,specialChars);
-      avClenght = charsLenght + numbersLenght + specialCharsLenght;
-      password = passwordGenAuto(pwdLength, availableChars, avClenght);
-    }
-
-    //1100
-    else if ((upper===true)&&(lower===true)&&(numeric===false)&&(spechar===false)){
-      var availableChars = upperChars.concat(lowerChars);
-      avClenght = charsLenght * 2;
-      password = passwordGenAuto(pwdLength, availableChars, avClenght);
-    }
-
-    //1101
-    else if ((upper===true)&&(lower===true)&&(numeric===false)&&(spechar===true)){
-      var availableChars = upperChars.concat(lowerChars,specialChars);
-      avClenght = (charsLenght * 2) + specialCharsLenght;
-      password = passwordGenAuto(pwdLength, availableChars, avClenght);
-    }
-
-    //1110
-    else if ((upper===true)&&(lower===true)&&(numeric===true)&&(spechar===false)){
-      var availableChars = upperChars.concat(lowerChars,numbersChars);
-      avClenght = (charsLenght * 2) + numbersLenght;
-      password = passwordGenAuto(pwdLength, availableChars, avClenght);
-    }
-
-    //1111
-    else if ((upper===true)&&(lower===true)&&(numeric===true)&&(spechar===true)){
-      var availableChars = upperChars.concat(lowerChars,numbersChars, specialChars);
-      avClenght = (charsLenght * 2) + numbersLenght + specialCharsLenght;
-      password = passwordGenAuto(pwdLength, availableChars, avClenght);
-    }
-
-    else{
+    if((upper===false)&&(lower===false)&&(numbers===false)&&(spechar===false)){
       window.alert("You didn't select any option");
     }
+
+    //Using the availableChars string and the length of it generates the password 
+    for (var i = 0; i<pwdLength; i++){
+      //Randomly generates a number between 0 and the lenght of the available string  
+      var numgen = Math.floor(Math.random() * (avCLength-1));
+      
+      password = prevpass.concat(availableChars.charAt(numgen));
+      
+      prevpass = password;
+    } 
   }
 
   else{
@@ -156,23 +88,6 @@ function writePassword() {
   passwordText.value = password;
 }
 
-//Num generator
-function getRndInteger(min, max) {
-  return Math.floor(Math.random() * (max - min) ) + min;
-}
-
-
-function passwordGenAuto(pwdLength, availableChars, avClenght){
-
-  for (var i = 0; i<pwdLength; i++){
-          
-    var numgen = getRndInteger(0,(avClenght-1));
-    password = prevpass.concat(availableChars.charAt(numgen));
-    
-    prevpass = password;
-  }
-  return password;
-}
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
