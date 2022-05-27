@@ -12,10 +12,11 @@ var prevpass = "";
   // Declaration of the possible characters string (the quotation sign requires the backslash to make it an escape character)
   var upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   var lowerChars = "abcdefghijklmnopqrstuvwxyz";
-  var charsLength = 26;
   var numbersChars = "0123456789";
-  var numbersLength = 10;
   var specialChars = " !\"#$%&'(\\)*+,-./:;<=>?@[]^_`{|}~";
+  
+  var charsLength = 26;
+  var numbersLength = 10;
   var specialCharsLength = 33;
   
   var availableChars = "";
